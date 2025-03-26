@@ -1,9 +1,14 @@
 import express from "express";
 import User from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "15d" });
+};
+
+router.post("/register", async (req, res) => {
   try {
     const { email, username, password } = req.body;
     if (!email || !password || !username) {
@@ -34,28 +39,36 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Username already exists" });
     }
     // get random avatar
-    const profileImage = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`
+    const profileImage = `https://api.dicebear.com/7.x/avataaars/svg?seed=${username}`;
 
     const user = new User({
       email,
       username,
       password,
-      profileImage
-    })
+      profileImage,
+    });
 
-    await user.save()
+    await user.save();
 
-
-
-
-
+    const token = generateToken(user._id);
+    res.status(201).json({
+      token, //The JWT token allows the user to stay authenticated.
+      user: {
+        //The user object contains all the saved user details.
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage,
+      },
+    });
   } catch (error) {
-    console.log(error);
+    console.log("Error in register route", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
-router.post("/register", async (req, res) => {
-  res.send("Registered");
+router.post("/login", async (req, res) => {
+  res.send("Logged In");
 });
 
 export default router;
