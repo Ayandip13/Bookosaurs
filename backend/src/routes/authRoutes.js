@@ -56,7 +56,7 @@ router.post("/register", async (req, res) => {
       user: {
         //The user object contains all the saved user details.
         id: user._id,
-        username: user.username,
+        username: user.username, //here we didn't send the password to the user
         email: user.email,
         profileImage: user.profileImage,
       },
@@ -68,7 +68,37 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  res.send("Logged In");
+  try {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ message: "All fields are required" });
+
+    //check if user exists
+
+    const user = User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "user doesn't exists" });
+
+    // check if password is correct.. so here we're sending the password to the method that is comparing the password that is given by user and hashed password(from DB)
+    const isPassowrdCorrect = await user.comparePassword(password);
+    if (!isPassowrdCorrect)
+      return res.status(400).json({ message: "Invalid credentials" });
+
+    //generate token
+    const token = generateToken(user._id);
+
+    res.status(200).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profileImage: user.profileImage,
+      },
+    });
+  } catch (error) {
+    console.log("Error in login route", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 export default router;
