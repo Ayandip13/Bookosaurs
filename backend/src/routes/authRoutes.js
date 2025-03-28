@@ -75,7 +75,7 @@ router.post("/login", async (req, res) => {
 
     //check if user exists
 
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "user doesn't exists" });
 
     // check if password is correct.. so here we're sending the password to the method that is comparing the password that is given by user and hashed password(from DB)
