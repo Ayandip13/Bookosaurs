@@ -1,11 +1,13 @@
 const express = require("express");
 import cloudinary from "../lib/cloudiary";
 import Book from "../models/Book.model";
+import protectRoute from "../middleware/auth.middleware";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", protectRoute, async (req, res) => {
   try {
+    req.user
     const { title, caption, rating, image } = req.body;
     if (!image || !title || !caption || !rating)
       return res.status(400).json({ message: "Please Provide all fields" });
