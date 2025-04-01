@@ -1,6 +1,6 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import SafeScreen from "../components/safeScreen.jsx";
+import SafeScreen from "../components/SafeScreen.jsx";
 import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
