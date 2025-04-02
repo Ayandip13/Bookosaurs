@@ -6,25 +6,33 @@ import {
   TextInput,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import styles from "../../assets/styles/signup.style.js";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import COLORS from "../../constants/colors.js";
 import { router, useRouter } from "expo-router";
+import { useAuthStore } from "../../store/authStore.js";
 
 export default function Signup() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const { user, isLoading, register, token } = useAuthStore();
 
   const router = useRouter();
 
-  const handleLogin = () => {
-    setIsLoading(true);
+  const handleSignup = async () => {
+    // setIsLoading(true);
+    const result = await register(username, email, password);
+
+    if (!result.success) Alert.alert("Error", result.error);
   };
+
+  console.log(user);
+  console.log(token);
 
   return (
     <KeyboardAvoidingView
@@ -50,7 +58,7 @@ export default function Signup() {
                 />
                 <TextInput
                   style={styles.input}
-                  placeholder="Eg. bruise wayne"
+                  placeholder="eg. bruise w.."
                   autoCapitalize="none"
                   onChangeText={setUserName}
                   value={username}
@@ -103,7 +111,7 @@ export default function Signup() {
             <TouchableOpacity
               style={styles.button}
               activeOpacity={0.7}
-              onPress={handleLogin}
+              onPress={handleSignup}
               disabled={isLoading}
             >
               {isLoading ? (
