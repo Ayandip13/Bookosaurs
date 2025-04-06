@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   starButton: {
-    padding: 8,
+    padding: 5,
   },
   imagePicker: {
     width: "100%",
