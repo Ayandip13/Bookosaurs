@@ -5,11 +5,13 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Image,
   TouchableOpacity,
   Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
+import * as FileSystem from "expo-file-system";
 import styles from "../../assets/styles/create.styles";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
@@ -50,17 +52,26 @@ export default function Create() {
       });
       if (!result.canceled) {
         // console.log("result is here", result);
-        setImage(result.assets[0].uri);
+        setImage(result.assets[0].uri); //this is for showing the image uri in the UI
 
         //if base64 is provided, then use it
-
         if (result.assets[0].base64) {
-          setImageBase64(result.assets[0].base64);
+          setImageBase64(result.assets[0].base64); //this is to upload the image into base64 format to the api and db
         } else {
           // otherwise, convert it into base64
+          const base64 = await FileSystem.readAsStringAsync(
+            result.assets[0].uri,
+            {
+              encoding: FileSystem.EncodingType.Base64,
+            }
+          );
+          setImageBase64(base64);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("Error picking an image", error);
+      Alert.alert("Error", "There was a problem");
+    }
   };
 
   const handleSubmit = async () => {};
@@ -135,7 +146,7 @@ export default function Create() {
             <Text style={styles.label}>Book Image</Text>
             <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
               {image ? (
-                <Image />
+                <Image source={{ uri: image }} style={styles.previewImage} />
               ) : (
                 <View style={styles.placeholderContainer}>
                   <Ionicons
