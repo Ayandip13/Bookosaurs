@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
@@ -52,7 +53,7 @@ export default function Create() {
       });
       if (!result.canceled) {
         // console.log("result is here", result);
-        setImage(result.assets[0].uri); //this is for showing the image uri in the UI
+        setImage(result.assets[0].uri); //this is for showing the image in the UI
 
         //if base64 is provided, then use it
         if (result.assets[0].base64) {
@@ -78,7 +79,7 @@ export default function Create() {
 
   const renderRatingPicker = () => {
     const stars = [];
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i < 5; i++) {
       stars.push(
         <TouchableOpacity
           key={i}
@@ -161,6 +162,37 @@ export default function Create() {
               )}
             </TouchableOpacity>
           </View>
+
+          {/* Caption */}
+          <View style={styles.textArea}>
+            <Text style={styles.textArea}>Caption</Text>
+            <TextInput
+              style={styles.textArea}
+              placeholder="Write your review or thoughts about this book..."
+              value={caption}
+              onChangeText={setCaption}
+              multiline
+            />
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color={COLORS.white} />
+            ) : (
+              <>
+                <Ionicons
+                  name="cloud-upload-outline"
+                  size={20}
+                  color={COLORS.white}
+                  style={styles.buttonIcon}
+                />
+                <Text style={styles.buttonText}>Share</Text>
+              </>
+            )}
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
