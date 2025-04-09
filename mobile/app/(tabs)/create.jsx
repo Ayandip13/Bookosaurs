@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 import { useAuthStore } from "../../store/authStore.js";
 import * as ImagePicker from "expo-image-picker";
+import { API_URL } from "../../constants/api.js";
 
 export default function Create() {
   const [title, setTitle] = useState("");
@@ -30,6 +31,8 @@ export default function Create() {
 
   const router = useRouter();
   const { token } = useAuthStore();
+  console.log(token);
+  
 
   const pickImage = async () => {
     try {
@@ -93,7 +96,36 @@ export default function Create() {
         : "image/jpeg";
 
       const imageDataUrl = `data:${imageType};base64,${imageBase64}`;
-    } catch (error) {}
+
+      const response = await fetch(`${API_URL}/books`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          caption,
+          rating: rating.toString(),
+          image: imageDataUrl,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || "Something went wrong");
+
+      Alert.alert("Success", "Your book recomendation has been posted");
+      setTitle("");
+      setCaption("");
+      setImage(null);
+      setImageBase64(null);
+      setRating(3);
+      router.push("/");
+    } catch (error) {
+      console.error("Something went wrong, while creating the post");
+      Alert.alert("Error", error.message || "Post cannot be created");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderRatingPicker = () => {

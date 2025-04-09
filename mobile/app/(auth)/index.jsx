@@ -73,6 +73,8 @@ export default function Login() {
                   style={styles.inputIcon}
                 />
                 <TextInput
+                autoCapitalize="none"
+                keyboardType="ascii-capable"
                   style={styles.input}
                   placeholder="Enter your password"
                   placeholderTextColor={COLORS.placeholderText}
