@@ -1,16 +1,22 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useAuthStore } from "../../store/authStore";
 
 export default function Home() {
-  const { logout } = useAuthStore();
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHashMore] = useState(true);
+
+  const { token } = useAuthStore();
 
   return (
     <View>
       <Text>Home tab</Text>
-      <TouchableOpacity onPress={logout}>
+      {/* <TouchableOpacity onPress={logout}>
         <Text>Log Out</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
