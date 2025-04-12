@@ -5,6 +5,7 @@ import styles from "../../assets/styles/home.styles";
 import { useAuthStore } from "../../store/authStore";
 import { API_URL } from "../../constants/api";
 import { Ionicons } from "@expo/vector-icons";
+import { formatPublishDate } from "../../lib/util";
 // import {renderRatingPicker} from "./create"
 
 export default function Home() {
@@ -27,7 +28,19 @@ export default function Home() {
       if (!response.ok)
         throw new Error(data.message || "Failed to fetch the books");
 
-      setBooks((prevBooks) => [...prevBooks, ...data.books]); //...data.books cause `books` itself is an array of multiple objects, that's why we spreading the items..
+      // setBooks((prevBooks) => [...prevBooks, ...data.books]); //`...data.books` cause `books` itself is an array of multiple objects, that's why we spreading the items..
+
+      //This upper line is giving the errors that's why we write this code
+      const uniqueBooks =
+        refresh || pageNum === 1
+          ? data.books
+          : Array.from(
+              new Set([...books, ...data.books].map((book) => book._id))
+            ).map((id) =>
+              [...books, ...data.books].find((book) => book._id === id)
+            );
+      setBooks(uniqueBooks);
+
       setHashMore(pageNum < data.totalPages);
       setPage(pageNum); //is it okay? or we should a condition? for if setHash true then only setPage should be pageNum
     } catch (error) {
@@ -69,6 +82,9 @@ export default function Home() {
           {/* {renderRatingPicker(item.rating)} */}
         </View>
         <Text style={styles.caption}>{item?.caption}</Text>
+        <Text style={styles.date}>
+          Shared on {formatPublishDate(item.createdAt)}
+        </Text>
       </View>
     </View>
   );
@@ -83,6 +99,14 @@ export default function Home() {
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Bookosaurs 🐲</Text>
+            <Text style={styles.headerSubtitle}>
+              Discover great reads from the community
+            </Text>
+          </View>
+        }
       />
     </View>
   );

@@ -22,14 +22,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 26,
+    fontWeight: "700",
     fontFamily: "JetBrainsMono-Medium",
     letterSpacing: 0.5,
     color: COLORS.primary,
     marginBottom: 8,
   },
   headerSubtitle: {
-    fontSize: 14,
+    fontSize: 18,
     color: COLORS.textSecondary,
     textAlign: "center",
   },
