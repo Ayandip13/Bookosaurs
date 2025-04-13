@@ -1,12 +1,20 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
 import styles from "../../assets/styles/home.styles";
 import { useAuthStore } from "../../store/authStore";
 import { API_URL } from "../../constants/api";
+import RatingStars from "../../components/RatingStars";
 import { Ionicons } from "@expo/vector-icons";
 import { formatPublishDate } from "../../lib/util";
 import COLORS from "../../constants/colors";
+import Loader from "../../components/Loader";
 // import {renderRatingPicker} from "./create"
 
 export default function Home() {
@@ -21,7 +29,7 @@ export default function Home() {
       if (refresh) setRefreshing(true);
       else if (pageNum === 1) setLoading(true);
 
-      const response = await fetch(`${API_URL}/books?page=${page}&limit=5`, {
+      const response = await fetch(`${API_URL}/books?page=${pageNum}&limit=2`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -30,7 +38,6 @@ export default function Home() {
         throw new Error(data.message || "Failed to fetch the books");
 
       // setBooks((prevBooks) => [...prevBooks, ...data.books]); //`...data.books` cause `books` itself is an array of multiple objects, that's why we spreading the items..
-
       //This upper line is giving the errors that's why we write this code
       const uniqueBooks =
         refresh || pageNum === 1
@@ -56,7 +63,11 @@ export default function Home() {
     fetchBooks();
   }, []);
 
-  const handleLoadMore = async () => {};
+  const handleLoadMore = async () => {
+    if (hasMore && !loading && !refreshing) {
+      await fetchBooks(page + 1);
+    }
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.bookCard}>
@@ -80,7 +91,7 @@ export default function Home() {
       <View style={styles.bookDetails}>
         <Text style={styles.bookTitle}>{item?.title}</Text>
         <View style={styles.ratingContainer}>
-          {/* {renderRatingPicker(item.rating)} */}
+          <RatingStars rating={item.rating} size={20} />
         </View>
         <Text style={styles.caption}>{item?.caption}</Text>
         <Text style={styles.date}>
@@ -89,6 +100,8 @@ export default function Home() {
       </View>
     </View>
   );
+
+  // if (loading) return <Loader />;
 
   const { token } = useAuthStore();
 
@@ -100,14 +113,26 @@ export default function Home() {
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+        onEndReached={handleLoadMore} //This is the function that runs when the user reaches the end of the list.
+        onEndReachedThreshold={0.1} //This defines how early (how close to the bottom) the event should fire.
         //`ListHeaderComponent` is a property Rendered at the top of all the items. Can be a React Component Class, a render function, or a rendered element.
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Bookosaurs 🐲</Text>
+
             <Text style={styles.headerSubtitle}>
               Discover great reads from the community
             </Text>
           </View>
+        }
+        ListFooterComponent={
+          hasMore && books.length > 0 ? (
+            <ActivityIndicator
+              style={styles.footerLoader}
+              size="large"
+              color={COLORS.primary}
+            />
+          ) : null
         }
         //Rendered when the list is empty. Can be a React Component Class, a render function, or a rendered element.
         ListEmptyComponent={

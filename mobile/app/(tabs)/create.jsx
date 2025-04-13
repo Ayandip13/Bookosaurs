@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
+import RatingStars from "../../components/RatingStars";
 import * as FileSystem from "expo-file-system";
 import styles from "../../assets/styles/create.styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -82,7 +83,7 @@ export default function Create() {
 
   const handleSubmit = async () => {
     if (!title || !caption || !imageBase64 || !rating) {
-      Alert.alert("Error", "Please fill in all fields");
+      Alert.alert("Error", "Please fill all the fields");
       return;
     }
     try {
@@ -127,25 +128,27 @@ export default function Create() {
     }
   };
 
-  const renderRatingPicker = () => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <TouchableOpacity
-          key={i}
-          onPress={() => setRating(i)}
-          style={styles.starButton}
-        >
-          <Ionicons
-            name={i <= rating ? "star" : "star-outline"}
-            size={32}
-            color={i <= rating ? "#FEBA17" : COLORS.textSecondary}
-          />
-        </TouchableOpacity>
-      );
-    }
-    return <View style={styles.ratingContainer}>{stars}</View>;
-  };
+  // const renderRatingPicker = () => {
+  //   const stars = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     stars.push(
+  //       <TouchableOpacity
+  //         key={i}
+  //         onPress={() => setRating(i)}
+  //         style={styles.starButton}
+  //       >
+  //         <Ionicons
+  //           name={i <= rating ? "star" : "star-outline"}
+  //           size={32}
+  //           color={i <= rating ? "#FEBA17" : COLORS.textSecondary}
+  //         />
+  //       </TouchableOpacity>
+  //     );
+  //   }
+  //   return <View style={styles.ratingContainer}>{stars}</View>;
+  // };
+
+  <RatingStars rating={rating} onRate={setRating} />;
 
   return (
     <KeyboardAvoidingView
@@ -189,7 +192,7 @@ export default function Create() {
           {/* Rating */}
           <View style={styles.formGroup}>
             <Text style={styles.label}>Your Rating</Text>
-            {renderRatingPicker()}
+            <RatingStars rating={rating} onRate={setRating} />
           </View>
 
           {/* Image */}
