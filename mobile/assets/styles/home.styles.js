@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   emptyText: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 26,
+    fontWeight: "700",
     color: COLORS.textPrimary,
     marginTop: 16,
     marginBottom: 8,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: 18,
     color: COLORS.textSecondary,
     textAlign: "center",
   },

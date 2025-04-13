@@ -6,6 +6,7 @@ import { useAuthStore } from "../../store/authStore";
 import { API_URL } from "../../constants/api";
 import { Ionicons } from "@expo/vector-icons";
 import { formatPublishDate } from "../../lib/util";
+import COLORS from "../../constants/colors";
 // import {renderRatingPicker} from "./create"
 
 export default function Home() {
@@ -99,11 +100,26 @@ export default function Home() {
         keyExtractor={(item) => item._id}
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
+        //`ListHeaderComponent` is a property Rendered at the top of all the items. Can be a React Component Class, a render function, or a rendered element.
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.headerTitle}>Bookosaurs 🐲</Text>
             <Text style={styles.headerSubtitle}>
               Discover great reads from the community
+            </Text>
+          </View>
+        }
+        //Rendered when the list is empty. Can be a React Component Class, a render function, or a rendered element.
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons
+              name="book-outline"
+              size={70}
+              color={COLORS.textSecondary}
+            />
+            <Text style={styles.emptyText}>No recommendations yet</Text>
+            <Text style={styles.emptySubtext}>
+              Be the first to share the book
             </Text>
           </View>
         }
