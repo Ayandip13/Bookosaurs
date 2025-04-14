@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Image } from "expo-image";
@@ -90,13 +91,13 @@ export default function Home() {
 
       <View style={styles.bookDetails}>
         <Text style={styles.bookTitle}>{item?.title}</Text>
-        <View style={styles.ratingContainer}>
-          <RatingStars rating={item.rating} size={20} />
-        </View>
         <Text style={styles.caption}>{item?.caption}</Text>
         <Text style={styles.date}>
           Shared on {formatPublishDate(item.createdAt)}
         </Text>
+        <View style={[styles.ratingContainer, { left: 125, top: -5 }]}>
+          <RatingStars rating={item.rating} size={20} />
+        </View>
       </View>
     </View>
   );
@@ -111,6 +112,14 @@ export default function Home() {
         data={books}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => fetchBooks(1, true)}
+            colors={[COLORS.primary]}
+            tintColor={COLORS.primary}
+          />
+        }
         contentContainerStyle={styles.listContainer}
         showsVerticalScrollIndicator={false}
         onEndReached={handleLoadMore} //This is the function that runs when the user reaches the end of the list.

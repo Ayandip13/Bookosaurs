@@ -128,27 +128,7 @@ export default function Create() {
     }
   };
 
-  // const renderRatingPicker = () => {
-  //   const stars = [];
-  //   for (let i = 0; i < 5; i++) {
-  //     stars.push(
-  //       <TouchableOpacity
-  //         key={i}
-  //         onPress={() => setRating(i)}
-  //         style={styles.starButton}
-  //       >
-  //         <Ionicons
-  //           name={i <= rating ? "star" : "star-outline"}
-  //           size={32}
-  //           color={i <= rating ? "#FEBA17" : COLORS.textSecondary}
-  //         />
-  //       </TouchableOpacity>
-  //     );
-  //   }
-  //   return <View style={styles.ratingContainer}>{stars}</View>;
-  // };
-
-  <RatingStars rating={rating} onRate={setRating} />;
+  // <RatingStars rating={rating} onRate={setRating} />;
 
   return (
     <KeyboardAvoidingView
@@ -156,6 +136,7 @@ export default function Create() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.container}
         style={styles.scrollViewStyle}
       >

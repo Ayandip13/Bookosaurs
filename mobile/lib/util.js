@@ -11,8 +11,31 @@ export function formatMemberSince(dateString) {
 
 export function formatPublishDate(dateString) {
   const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "long" });
-  const day = date.getDate();
-  const year = date.getFullYear();
-  return `${month} ${day} ${year}`;
+  const now = new Date();
+
+  const isSameDay = (a, b) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+
+  const formatTime = (date) =>
+    `${String(date.getHours()).padStart(2, "0")}:${String(
+      date.getMinutes()
+    ).padStart(2, "0")}`;
+
+  if (isSameDay(date, now)) {
+    return `Today at ${formatTime(date)}`;
+  } else if (isSameDay(date, yesterday)) {
+    return `Yesterday at ${formatTime(date)}`;
+  } else {
+    const formattedDate = date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    return `${formattedDate} at ${formatTime(date)}`;
+  }
 }
