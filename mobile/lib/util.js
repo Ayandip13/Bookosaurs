@@ -2,10 +2,27 @@
 
 export function formatMemberSince(dateString) {
   const date = new Date(dateString);
-  const month = date.toLocaleString("default", { month: "short" });
-  const year = date.getFullYear();
-  return `${month} ${year}`;
+  const now = new Date();
+
+  const isSameDay = (a, b) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+
+  if (isSameDay(date, now)) {
+    return "Joined Today";
+  } else if (isSameDay(date, yesterday)) {
+    return "Joined Yesterday";
+  } else {
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `Joined on ${month} ${year}`;
+  }
 }
+
 
 //this function will convert the createdAt to this format: "May 15, 2023"
 

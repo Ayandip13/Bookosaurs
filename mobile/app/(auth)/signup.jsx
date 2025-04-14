@@ -100,6 +100,7 @@ export default function Signup() {
                 <TextInput
                   style={styles.input}
                   placeholder="Enter your password"
+                  autoCapitalize="none"
                   placeholderTextColor={COLORS.placeholderText}
                   value={password}
                   onChangeText={setPassword}

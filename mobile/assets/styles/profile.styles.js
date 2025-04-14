@@ -40,18 +40,18 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   username: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "700",
     color: COLORS.textPrimary,
     marginBottom: 4,
   },
   email: {
-    fontSize: 14,
+    fontSize: 16,
     color: COLORS.textSecondary,
     marginBottom: 4,
   },
   memberSince: {
-    fontSize: 12,
+    fontSize: 14,
     color: COLORS.textSecondary,
   },
   logoutButton: {

@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   bookDetails: {
     padding: 12,
-    backgroundColor: "#FEFAF6", //COLORS.cardBackground
+    backgroundColor: "#FFFFFF", //COLORS.cardBackground
     borderRadius: 12,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
