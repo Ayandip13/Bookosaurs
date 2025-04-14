@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import styles from "../assets/styles/create.styles";
 
-export default function RatingStars({ rating = 0, onRate = null, size = 20 }) {
+export default function RatingStars({ rating = 0, onRate = null, size = 20, style }) {
   const stars = [];
 
   for (let i = 0; i < 5; i++) {
@@ -24,5 +24,5 @@ export default function RatingStars({ rating = 0, onRate = null, size = 20 }) {
     );
   }
 
-  return <View style={styles.ratingContainer}>{stars}</View>;
+  return <View style={[styles.ratingContainer, style]}>{stars}</View>;
 }

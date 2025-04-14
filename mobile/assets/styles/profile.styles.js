@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
   },
   booksCount: {
-    fontSize: 14,
+    fontSize: 16,
+    right: -3,
     color: COLORS.textSecondary,
   },
   booksList: {
@@ -116,7 +117,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bookTitle: {
-    fontSize: 16,
+    fontSize: 18,
+    left: -3,
     fontWeight: "600",
     color: COLORS.textPrimary,
     marginBottom: 4,
@@ -146,8 +148,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   emptyText: {
-    fontSize: 16,
-    fontWeight: "600",
+    fontSize: 19,
+    fontWeight: "800",
     color: COLORS.textPrimary,
     marginTop: 16,
     marginBottom: 20,
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: COLORS.primary,
-    borderRadius: 12,
+    borderRadius: 6,
     paddingVertical: 12,
     paddingHorizontal: 20,
     shadowColor: COLORS.black,
@@ -166,8 +168,8 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: COLORS.white,
-    fontWeight: "600",
-    fontSize: 14,
+    fontWeight: "400",
+    fontSize: 16,
   },
 });
 
