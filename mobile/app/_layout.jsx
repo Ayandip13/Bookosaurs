@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { useAuthStore } from "../store/authStore.js";
 import { useEffect } from "react";
 
+
 export default function RootLayout() {
   const router = useRouter(); // for navigation
   const segments = useSegments(); // get current route group like (auth), (tabs)
