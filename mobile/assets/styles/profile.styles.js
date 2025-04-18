@@ -121,16 +121,17 @@ const styles = StyleSheet.create({
     left: -3,
     fontWeight: "600",
     color: COLORS.textPrimary,
-    marginBottom: 4,
+    marginBottom: -6,
   },
   ratingContainer: {
     flexDirection: "row",
     marginBottom: 4,
   },
   bookCaption: {
-    fontSize: 14,
+    fontSize: 15,
     color: COLORS.textDark,
     marginBottom: 4,
+    top:7,
     flex: 1,
   },
   bookDate: {
