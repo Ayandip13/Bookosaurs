@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   header: {
+    marginTop: 20,
     marginBottom: 20,
     alignItems: "center",
   },
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
     marginTop: 14,
     marginLeft: -20,
   },

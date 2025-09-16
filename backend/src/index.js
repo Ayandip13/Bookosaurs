@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import "dotenv/config";
 import authRoutes from "./routes/authRoutes.js";
@@ -8,7 +9,8 @@ import job from "./lib/cron.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.json({ limit: "20mb" })); //Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option.
+
+app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(cors());
 job.start();
@@ -16,7 +18,12 @@ job.start();
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT}`);
-  ConnectDB();
-});
+// connect first, then start server
+const startServer = async () => {
+  await ConnectDB();
+  app.listen(PORT, () => {
+    console.log(`Server is running at ${PORT}`);
+  });
+};
+
+startServer();

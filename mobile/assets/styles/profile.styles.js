@@ -1,5 +1,5 @@
 // styles/profile.styles.js
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import COLORS from "../../constants/colors";
 
 const styles = StyleSheet.create({
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     borderWidth: 1,
     borderColor: COLORS.border,
+    marginTop: Dimensions.get("window").height * 0.05,
   },
   profileImage: {
     width: 80,
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
   deleteButton: {
     padding: 8,
     justifyContent: "center",
+    top: Dimensions.get("window").height * 0.05,
   },
   emptyContainer: {
     alignItems: "center",

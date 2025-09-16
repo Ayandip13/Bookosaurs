@@ -1,9 +1,9 @@
-import { Stack } from "expo-router";
+import { Stack, Slot } from "expo-router";
 
-const AuthLayout = () => {
+export default function AuthLayout() {
   return (
-  <Stack screenOptions={{ headerShown: false }} />
-);
-};
-
-export default AuthLayout;
+    <Stack screenOptions={{ headerShown: false }}>
+      <Slot /> {/* must include Slot */}
+    </Stack>
+  );
+}

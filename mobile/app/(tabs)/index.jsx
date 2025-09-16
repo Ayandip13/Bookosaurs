@@ -95,7 +95,7 @@ export default function Home() {
         <Text style={styles.date}>
           Shared on {formatPublishDate(item.createdAt)}
         </Text>
-        <View style={[styles.ratingContainer, { left: 125, top: -5 }]}>
+        <View style={[styles.ratingContainer]}>
           <RatingStars rating={item.rating} size={20} />
         </View>
       </View>
