@@ -106,7 +106,7 @@ export default function Profile() {
 
   const renderBookItem = ({ item }) => (
     <View style={styles.bookItem}>
-      <Image source={item.image} style={styles.bookImage} />
+      <Image source={item.image} contentFit="fill" style={styles.bookImage} />
       <View style={styles.bookInfo}>
         <Text style={styles.bookTitle}>{item.title}</Text>
         <RatingStars rating={item.rating} size={13} style={{ marginTop: 10 }} />

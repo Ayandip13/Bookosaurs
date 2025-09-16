@@ -49,14 +49,18 @@ export default function RootLayout() {
   if (loading || !isNavigationReady) {
     return (
       <SafeAreaProvider>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" />
-        </View>
+        {isNavigationReady && !loading ? (
+          <Slot />
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" />
+          </View>
+        )}
         <StatusBar style="dark" />
       </SafeAreaProvider>
-    );
+    );   
   }
 
   return (
