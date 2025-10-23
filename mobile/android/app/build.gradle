@@ -87,9 +87,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.ayandip02.Bookosaurs'
+    namespace 'com.ayandip02.Linking'
     defaultConfig {
-        applicationId 'com.ayandip02.Bookosaurs'
+        applicationId 'com.ayandip02.Linking'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

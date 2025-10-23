@@ -1,4 +1,4 @@
-package com.ayandip02.Bookosaurs
+package com.ayandip02.Linking
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

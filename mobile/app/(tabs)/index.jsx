@@ -127,7 +127,7 @@ export default function Home() {
         //`ListHeaderComponent` is a property Rendered at the top of all the items. Can be a React Component Class, a render function, or a rendered element.
         ListHeaderComponent={
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Bookosaurs 🐲</Text>
+            <Text style={styles.headerTitle}>Linking 🐲</Text>
 
             <Text style={styles.headerSubtitle}>
               Discover great reads from the community
