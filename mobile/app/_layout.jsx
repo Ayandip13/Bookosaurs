@@ -32,18 +32,16 @@ export default function RootLayout() {
   }, [navigationState?.key]);
 
   // Handle navigation once everything is ready
-  useEffect(() => {
-    if (!isNavigationReady || loading) return;
-
+  if (isNavigationReady && !loading) {
     const inAuthScreen = (segments?.[0] ?? "") === "(auth)";
     const isSignedIn = !!(user && token);
 
     if (!isSignedIn && !inAuthScreen) {
-      router.replace("/(auth)/login");
+      return <Redirect href="/(auth)" />;
     } else if (isSignedIn && inAuthScreen) {
-      router.replace("/(tabs)");
+      return <Redirect href="/(tabs)" />;
     }
-  }, [user, token, segments, isNavigationReady, loading]);
+  }
 
   // Show loading indicator while checking auth and navigation state
   if (loading || !isNavigationReady) {
